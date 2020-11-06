@@ -15,7 +15,7 @@ class User < ApplicationRecord
     if token.present? 
       begin
         #validating and decoding token
-        secret_key= Rails.application.secrets.secret_key_base[0]
+        secret_key= '123456789'
         decoded_token = JWT.decode(token, secret_key)[0]    #recieving data hash from the token
         return User.find_by(email: decoded_token['email'])
       rescue  JWT::DecodeError
@@ -28,7 +28,7 @@ class User < ApplicationRecord
   def data
     #generating user info and token
     exp= 1.days.from_now.to_i
-    secret_key= Rails.application.secrets.secret_key_base[0]
+    secret_key= '123456789'
     user_data= {username: self.username , email: self.email , exp: exp} 
     token = JWT.encode(user_data , secret_key)
     user_data['token'] = token
